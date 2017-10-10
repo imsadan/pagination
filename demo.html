@@ -1,0 +1,75 @@
+/*
+   加载的是pagination3.js
+*/
+<html>
+<head>
+<link rel="stylesheet" href="css/jquery.pagination.css" />
+<!-- 必要-->
+<script type="text/javascript" src="js/jquery-2.2.0.min.js"></script>
+<script src="js/jquery.pagination.min.js"></script>
+</head>
+ <body>
+	<div id="coltab"></div>
+	   <div id="pagination3" class="page fl"></div>
+	</div>
+ </body>	
+<html>
+
+<script>
+	//默认当前页
+	var currPage=1;
+	//默认总页数
+	var totalPage=1;
+	function loadData(){
+	   $.ajax({
+		  type:'post',
+		  url:'/companyweb/get/pageNews',
+		  data:{currentPage:currPage},
+		  success:function(data){
+			 var s=eval(data);
+			 //总页数
+			 var tab="";
+			 //返回json数据遍历
+/* 			 for(var i=0;i<s.length;i++){
+				 totalPage=s[i].totalPage;
+				 currPage=s[i].currPage;
+				 for(var j=0;j<s[i].lists.length;j++){
+				   tab+="<div class='massage' id='"+currPage+"'>";
+				   tab+="<img src='"+s[i].lists[j].image+"' style='width:100%;height:350px;' >";
+				   tab+="<div class='title_massage'>";
+						tab+="<p style='font:20px PingFang Medium;'>"+s[i].lists[j].newname+"</p>";
+				   tab+="</div>";
+				   tab+="<div class='body_massage'>";
+						tab+="<p>"+s[i].lists[j].newtext+"</p>";
+				   tab+="</div>";
+				   tab+="<div class='read_massage'>";
+						tab+="<a href='/companyweb/reads/"+s[i].lists[j].id+"' class='btn btn-default' style='font:10px PingFang Regular;'>进入阅读&gt;</a>";
+				   tab+="</div>";
+				   tab+="</div>";				         
+				 }				        
+			 }*/
+				  $("#coltab").html('');
+				  $("#coltab").append(tab); 
+				  
+             //调用插件设置				  
+			$("#pagination3").pagination({
+			  currentPage: currPage, //第几页
+			  totalPage: totalPage,//总页数
+			  count: 3, //页码个数
+			  callback:function(current){
+				 currPage=current;
+				 loadData();
+			  
+			  }
+		});
+	},
+	   error : function(e) { 
+		alert("数据访问失败"); 
+	   } 
+}); 
+}
+
+loadData();
+</script>	
+
+
